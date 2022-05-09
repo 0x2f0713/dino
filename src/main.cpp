@@ -25,7 +25,7 @@ int main()
     if (ctx.isPlaying)
     {
       // TODO: Redraw game screen
-      // GamePlay::redraw(&ctx);
+      GamePlay::redraw(&ctx);
       // ctx.current_score++;
       // ctx.high_score = std::max(ctx.high_score,ctx.current_score);
       // s = std::to_string(ctx.current_score);

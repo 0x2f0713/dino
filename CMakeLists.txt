@@ -6,7 +6,7 @@ if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
 endif(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
 
 cmake_minimum_required(VERSION 3.10)
-project(Chess)
+project(Dino)
 
 # set(CMAKE_VERBOSE_MAKEFILE ON)
 

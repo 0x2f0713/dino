@@ -1,4 +1,4 @@
-# Chess
+# Dino
 This project is under development. Tested on Ubuntu 20.04
 
 ### Dependencies
@@ -49,5 +49,5 @@ make
 ### Run game
 
 ```
-~/chess/build$ ./chess
+~/dino/build$ ./dino
 ```
