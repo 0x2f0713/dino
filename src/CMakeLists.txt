@@ -11,6 +11,4 @@ include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS} ${SDL2_TTF_I
 add_subdirectory(ui)
 add_subdirectory(screen)
 
-target_link_libraries(chess)
-
-target_link_libraries(chess ${SDL2_LIBRARIES} UIModule screen)
+target_link_libraries(chess PUBLIC ${SDL2_LIBRARIES} PUBLIC ui PUBLIC screen)

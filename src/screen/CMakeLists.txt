@@ -1,3 +1,5 @@
-set(SOURCES *.cpp)
-ADD_LIBRARY(screen *.cpp)
-target_link_libraries(screen ${SDL2_IMAGE_LIBRARIES})
+# set(SOURCES lobby.cpp)
+file(GLOB SOURCES "*.cpp")
+ADD_LIBRARY(screen SHARED ${SOURCES})
+
+target_link_libraries(screen ui)
