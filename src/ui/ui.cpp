@@ -147,4 +147,11 @@ namespace UI
   {
     // SDL_RenderPresent( renderer );
   }
+void loadSpecificObjet(SDL_Renderer *renderer,SDL_Rect *objectLocation) {
+  SDL_Texture *texture = UI::loadMedia(mediaLists["DINO-UP"], renderer);
+  SDL_Rect image_src = {0, 0, 100, 100};
+  SDL_Rect image_dest = {160, SCREEN_HEIGHT / 3 * 2 - 160, 160, 160};
+  SDL_RenderCopy(renderer, texture, NULL, &image_dest);
+	
+}
 } // namespace UI
