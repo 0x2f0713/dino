@@ -120,7 +120,7 @@ namespace UI
         return tmpTexture;
     }
 
-    bool showText(SDL_Renderer * renderer, TTF_Font * font, char *text, SDL_Color color, SDL_Rect *dst_rect)
+    bool showText(SDL_Renderer * renderer, TTF_Font * font, char const *text, SDL_Color color, SDL_Rect *dst_rect)
     {
 
         SDL_Surface *textSurface;
