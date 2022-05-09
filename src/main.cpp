@@ -1,6 +1,11 @@
-#include "include/ui/ui.h"
+// #include "include/ui/ui.h"
+
 #include "include/screen/lobby.h"
+#include "include/screen/gameplay.h"
+
 #include <cstdio>
+#include <math.h>
+
 
 int main()
 {
@@ -17,6 +22,18 @@ int main()
   }
   while (!ctx.quit)
   {
+    if (ctx.isPlaying)
+    {
+      // TODO: Redraw game screen
+      GamePlay::redraw(&ctx);
+      // ctx.current_score++;
+      // ctx.high_score = std::max(ctx.high_score,ctx.current_score);
+      // s = std::to_string(ctx.current_score);
+      // pchar = s.c_str();
+      // UI::showText(ctx.renderer, ctx.font, pchar, UI::getTextColor(), &dest);
+      // printf("%i\n", ctx.current_score);
+    }
+    
     while (SDL_PollEvent(&(ctx.e)) != 0)
     {
       switch (ctx.e.type)
@@ -33,10 +50,12 @@ int main()
           printf("LEFT\n");
           break;
         case SDLK_RIGHT:
+          ctx.isPlaying = true;
           printf("RIGHT\n");
           break;
         case SDLK_UP:
           printf("UP\n");
+          ctx.isPlaying = true;
           break;
         case SDLK_DOWN:
           printf("DOWN\n");

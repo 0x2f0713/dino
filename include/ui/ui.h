@@ -1,7 +1,8 @@
 #include <string>
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_ttf.h"
-typedef struct context
+
+struct context
 {
     bool quit;
     SDL_Window *window;
@@ -10,6 +11,7 @@ typedef struct context
     TTF_Font *font;
     uint64_t high_score;
     uint64_t current_score;
+    bool isPlaying;
     context()
     {
         quit = false;
@@ -18,8 +20,9 @@ typedef struct context
         font = NULL;
         high_score = 0;
         current_score = 0;
+        isPlaying = false;
     }
-} context;
+};
 
 namespace UI
 {
@@ -35,7 +38,8 @@ namespace UI
 
     /* Utilities */
     SDL_Texture *loadMedia(std::string mediaPath, SDL_Renderer *renderer);
-    bool showText(SDL_Renderer *renderer, TTF_Font *font, char *text, SDL_Color color, SDL_Rect *dst_rect);
+    bool showText(SDL_Renderer *renderer, TTF_Font *font, char const *text, SDL_Color color, SDL_Rect *dst_rect);
     void updateSurface(SDL_Surface *src, SDL_Surface *des, int x, int y, int w, int h);
     void updateRenderer();
+    SDL_Color getTextColor();
 } // namespace UI

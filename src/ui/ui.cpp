@@ -8,6 +8,7 @@
 
 namespace UI
 {
+  // SDL_Color textColor = {0,0,0};
   bool init(context *ctx)
   {
     return initWindow(ctx) && initTTF() && initIMGLoader() && loadFont(ctx->font);
@@ -106,9 +107,9 @@ namespace UI
     return tmpTexture;
   }
 
-  bool showText(SDL_Renderer *renderer, TTF_Font *font, char *text, SDL_Color color, SDL_Rect *dst_rect)
+  bool showText(SDL_Renderer *renderer, TTF_Font *font, char const *text, SDL_Color color, SDL_Rect *dst_rect)
   {
-
+    // SDL_RenderClear(renderer);
     SDL_Surface *textSurface;
 
     textSurface = TTF_RenderText_Solid(font, text, color);
@@ -146,5 +147,10 @@ namespace UI
   void updateRenderer()
   {
     // SDL_RenderPresent( renderer );
+  }
+
+  SDL_Color getTextColor() {
+    SDL_Color color = {244, 130, 37};
+    return color;
   }
 } // namespace UI
