@@ -4,4 +4,5 @@
 namespace GamePlay
 {
     void redraw(context *ctx);
+    void drawScore(context *ctx);
 } // namespace GamePlay

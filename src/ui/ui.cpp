@@ -6,27 +6,72 @@
 #include "SDL2/SDL_ttf.h"
 #include "include/constant.h"
 
-enum OBJECT
-{
-    NORMAL_DINO,
-    CLOUD,
-    BIRD_1,
-    BIRD_2,
-    GAMEOVER,
-    REPLAY,
-    TREE_LOW_1,
-    TREE_LOW_2,
-    TREE_LOW_3,
-    TREE_LOW_4,
-
-};
 namespace UI
 {
-    bool init(context * ctx)
+    SDL_Texture *objectSrc;
+    SDL_Rect objectSrcLocation[28] = {
+        {0, 0, 73, 65},         // REPLAY
+        {76, 6, 90, 90},        // DINO_NORMAL        
+        {166, 2, 92, 27},       // CLOUD
+        {260, 15, 92, 67},      // BIRD_1
+        {352, 2, 92, 60},       // BIRD_2
+        {954, 29, 381, 21},     // GAMEOVER
+        {446, 2, 34, 70},       // TREE_MEDIUM_1
+        {480, 2, 34, 70},       // TREE_MEDIUM_2
+        {514, 2, 34, 70},       // TREE_MEDIUM_3
+        {548, 2, 34, 70},       // TREE_MEDIUM_4
+        {582, 2, 34, 70},       // TREE_MEDIUM_5
+        {616, 2, 34, 70},       // TREE_MEDIUM_6
+        // {650, 2, 34, 70},
+        {652, 2, 50, 100},      // TREE_BIG_1
+        {702, 2, 50, 100},      // TREE_BIG_2
+        {752, 2, 50, 100},      // TREE_BIG_3
+        {802, 2, 50, 100},      // TREE_BIG_4
+        {850, 2, 102, 100},     // TREE_BIG_5
+        {1338, 2, 88, 94},      // DINO_1
+        {1426, 2, 88, 94},      // DINO_2
+        {1514, 2, 88, 94},      // DINO_3
+        {1602, 2, 88, 94},      // DINO_4
+        {1782, 2, 88, 94},      // DINO_5
+        {1866, 36, 118, 60},    // DINO_6
+        {1984, 36, 118, 60},    // DINO_7
+        {2, 104, 2400, 24}      // GROUND
+    };
+    SDL_Rect objectDestLocation[28] = {
+        {0, 0, 73, 65},         // REPLAY
+        {76, 6, 90, 90},        // DINO_NORMAL        
+        {166, 2, 92, 27},       // CLOUD
+        {260, 15, 92, 67},      // BIRD_1
+        {352, 2, 92, 60},       // BIRD_2
+        {954, 29, 381, 21},     // GAMEOVER
+        {446, 2, 34, 70},       // TREE_MEDIUM_1
+        {480, 2, 34, 70},       // TREE_MEDIUM_2
+        {514, 2, 34, 70},       // TREE_MEDIUM_3
+        {548, 2, 34, 70},       // TREE_MEDIUM_4
+        {582, 2, 34, 70},       // TREE_MEDIUM_5
+        {616, 2, 34, 70},       // TREE_MEDIUM_6
+        // {650, 2, 34, 70},
+        {652, 2, 50, 100},      // TREE_BIG_1
+        {702, 2, 50, 100},      // TREE_BIG_2
+        {752, 2, 50, 100},      // TREE_BIG_3
+        {802, 2, 50, 100},      // TREE_BIG_4
+        {850, 2, 102, 100},     // TREE_BIG_5
+        {1338, 2, 88, 94},      // DINO_1
+        {1426, 2, 88, 94},      // DINO_2
+        {160, SCREEN_HEIGHT / 3 * 2 - 160, 88, 94},
+        {160, SCREEN_HEIGHT / 3 * 2 - 160, 88, 94},
+        // {1514, 2, 88, 94},      // DINO_3
+        // {1602, 2, 88, 94},      // DINO_4
+        {1782, 2, 88, 94},      // DINO_5
+        {1866, 36, 118, 60},    // DINO_6
+        {1984, 36, 118, 60},    // DINO_7
+        {2, 104, 2400, 24}      // GROUND
+    };
+    bool init(context *ctx)
     {
         return initWindow(ctx) && initTTF() && initIMGLoader() && loadFont(ctx->font);
     }
-    bool initWindow(context * ctx)
+    bool initWindow(context *ctx)
     {
         // Initialize SDL
         if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -36,10 +81,6 @@ namespace UI
         }
         else
         {
-            // Create window
-            // ctx->window = SDL_CreateWindow(WINDOW_TITLE, SDL_WINDOWPOS_UNDEFINED,
-            //                                SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH,
-            //                                SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
             int result = SDL_CreateWindowAndRenderer(SCREEN_WIDTH, SCREEN_HEIGHT,
                                                      SDL_WINDOW_SHOWN, &(ctx->window),
                                                      &(ctx->renderer));
@@ -62,7 +103,7 @@ namespace UI
         }
         return true;
     }
-    bool loadFont(TTF_Font * &font)
+    bool loadFont(TTF_Font *&font)
     {
         font = TTF_OpenFont("resources/fonts/Montserrat-Regular.ttf", 24);
         if (!font)
@@ -84,7 +125,7 @@ namespace UI
         return true;
     }
 
-    void destroyWindow(context * ctx)
+    void destroyWindow(context *ctx)
     {
         SDL_DestroyWindow(ctx->window);
 
@@ -92,7 +133,7 @@ namespace UI
         SDL_Quit();
     }
 
-    SDL_Texture *loadMedia(std::string mediaPath, SDL_Renderer * renderer)
+    SDL_Texture *loadMedia(std::string mediaPath, SDL_Renderer *renderer)
     {
         SDL_Texture *tmpTexture = nullptr;
 
@@ -120,7 +161,7 @@ namespace UI
         return tmpTexture;
     }
 
-    bool showText(SDL_Renderer * renderer, TTF_Font * font, char const *text, SDL_Color color, SDL_Rect *dst_rect)
+    bool showText(SDL_Renderer *renderer, TTF_Font *font, char const *text, SDL_Color color, SDL_Rect *dst_rect)
     {
 
         SDL_Surface *textSurface;
@@ -141,11 +182,11 @@ namespace UI
         }
         SDL_FreeSurface(textSurface);
         SDL_DestroyTexture(text_texture);
-        SDL_RenderPresent(renderer);
+        // SDL_RenderPresent(renderer);
         return true;
     }
 
-    void updateSurface(SDL_Surface * src, SDL_Surface * des, int x, int y, int w,
+    void updateSurface(SDL_Surface *src, SDL_Surface *des, int x, int y, int w,
                        int h)
     {
         SDL_Rect offset;
@@ -167,11 +208,17 @@ namespace UI
         SDL_Color color = {244, 130, 37};
         return color;
     }
-    void loadSpecificObjet(SDL_Renderer * renderer, SDL_Rect * objectLocation)
+    SDL_Texture *loadObject(SDL_Renderer *renderer)
     {
-        SDL_Texture *texture = UI::loadMedia("resources/images/offline-sprite-2x.png", renderer);
+        UI::objectSrc = UI::loadMedia("resources/images/offline-sprite-2x.png", renderer);
+        return UI::objectSrc;
         // SDL_Rect image_src = {0, 0, 100, 100};
         // SDL_Rect image_dest = {160, SCREEN_HEIGHT / 3 * 2 - 160, 160, 160};
         // SDL_RenderCopy(renderer, texture, NULL, &image_dest);
+    }
+    void showObject(SDL_Renderer *renderer, int objectIndex)
+    {
+        SDL_RenderCopy(renderer, objectSrc, &objectSrcLocation[objectIndex], &objectDestLocation[objectIndex]);
+        // SDL_RenderPresent(renderer);
     }
 } // namespace UI

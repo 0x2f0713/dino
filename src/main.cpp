@@ -14,6 +14,8 @@ int main()
   if (initState)
   {
     initScreen(ctx.window, ctx.renderer, ctx.font);
+    SDL_RenderPresent(ctx.renderer);
+    ctx.object = UI::loadObject(ctx.renderer);
   }
   else
   {
