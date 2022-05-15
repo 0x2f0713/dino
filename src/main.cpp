@@ -1,12 +1,10 @@
-// #include "include/ui/ui.h"
-
-#include "include/screen/lobby.h"
-#include "include/screen/gameplay.h"
 
 #include <cstdio>
 #include <math.h>
+// #include "include/object_location.h"
 
-
+#include "include/screen/lobby.h"
+#include "include/screen/gameplay.h"
 int main()
 {
   context ctx = context();
@@ -28,14 +26,8 @@ int main()
     {
       // TODO: Redraw game screen
       GamePlay::redraw(&ctx);
-      // ctx.current_score++;
-      // ctx.high_score = std::max(ctx.high_score,ctx.current_score);
-      // s = std::to_string(ctx.current_score);
-      // pchar = s.c_str();
-      // UI::showText(ctx.renderer, ctx.font, pchar, UI::getTextColor(), &dest);
-      // printf("%i\n", ctx.current_score);
     }
-    
+
     while (SDL_PollEvent(&(ctx.e)) != 0)
     {
       switch (ctx.e.type)
@@ -57,7 +49,13 @@ int main()
           break;
         case SDLK_UP:
           printf("UP\n");
+          if (ctx.isPlaying)
+          {
+            ctx.jump = true;
+            ctx.v_y = V_JUMP;
+          }
           ctx.isPlaying = true;
+
           break;
         case SDLK_DOWN:
           printf("DOWN\n");

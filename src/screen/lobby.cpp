@@ -1,4 +1,3 @@
-#include "include/screen/lobby.h"
 
 #include <map>
 #include <string>
@@ -8,6 +7,8 @@
 #include "SDL2/SDL_ttf.h"
 #include "include/ui/ui.h"
 #include "include/constant.h"
+
+#include "include/screen/lobby.h"
 
 std::map<std::string, std::string> mediaLists{
     {"DINO-DOWN", "resources/images/object/dino-down.png"},

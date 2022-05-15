@@ -1,7 +1,20 @@
 #include <string>
+#include <queue>
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_ttf.h"
+#include "include/constant.h"
+// #include "include/object_location.h"
 
+#ifndef UI_H
+#define UI_H
+struct enemy {
+    SDL_Rect location;
+    int enemyObject;
+    enemy(int _enemyObject, SDL_Rect _location) {
+        enemyObject = _enemyObject;
+        location = _location;
+    }
+};
 struct context
 {
     bool quit;
@@ -12,11 +25,21 @@ struct context
     SDL_Texture *object;
     uint64_t high_score;
     uint64_t current_score;
+    SDL_Rect dinoDest;
     bool isPlaying;
     bool oddSteps;
-    int groundX;
+    bool jump;
+    bool jumped;
+    int v_y;
+    int tick;
+    int maxTick;
+    std::queue<SDL_Rect> groundDest;
+    std::deque<enemy> enemies;
     context()
     {
+        SDL_Rect groundDest1 = {0, SCREEN_HEIGHT / 3 * 2 - 9, 2400, 24};
+        SDL_Rect groundDest2 = {2400, SCREEN_HEIGHT / 3 * 2 - 9, 2400, 24};
+        SDL_Rect dinoDest = {160, SCREEN_HEIGHT / 3 * 2 - 80, 88, 94};
         quit = false;
         window = NULL;
         renderer = NULL;
@@ -25,7 +48,13 @@ struct context
         current_score = 0;
         isPlaying = false;
         oddSteps = false;
-        groundX = 0;
+        jump = false;
+        jumped = false;
+        v_y = 0;
+        tick = 0;
+        maxTick = rand() % 100 + 500;
+        groundDest.push(groundDest1);
+        groundDest.push(groundDest2);
     }
 };
 enum object
@@ -58,6 +87,7 @@ enum object
 };
 namespace UI
 {
+
     /* Initializer */
     bool init(context *ctx);
     bool initWindow(context *ctx);
@@ -76,4 +106,7 @@ namespace UI
     SDL_Color getTextColor();
     SDL_Texture* loadObject(SDL_Renderer * renderer);
     void showObject(SDL_Renderer *renderer, int objectIndex);
+    void showObject(SDL_Renderer *renderer, int objectIndex, SDL_Rect *dst_rect);
 } // namespace UI
+
+#endif
