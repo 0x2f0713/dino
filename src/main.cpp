@@ -50,10 +50,13 @@ int main()
           if (ctx.isPlaying)
           {
             ctx.jump = true;
-            ctx.v_y = V_JUMP;
+          }
+          if (ctx.gameover)
+          {
+            ctx.resetContext();
           }
           ctx.isPlaying = true;
-
+          ctx.lastUpdate = SDL_GetTicks();
           break;
         case SDLK_DOWN:
           break;
@@ -69,12 +72,12 @@ int main()
       }
     }
 
-	Uint64 end = SDL_GetPerformanceCounter();
+    Uint64 end = SDL_GetPerformanceCounter();
 
-	float elapsedMS = (end - start) / (float)SDL_GetPerformanceFrequency() * 1000.0f;
+    float elapsedMS = (end - start) / (float)SDL_GetPerformanceFrequency() * 1000.0f;
 
-	// Cap to 60 FPS
-	SDL_Delay(floor(16.666f - elapsedMS));
+    // Cap to 60 FPS
+    SDL_Delay(floor(16.666f - elapsedMS));
   }
 
   UI::destroyWindow(&ctx);

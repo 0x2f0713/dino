@@ -1,5 +1,6 @@
 #include <string>
 #include <queue>
+#include <math.h>
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_ttf.h"
 #include "include/constant.h"
@@ -31,38 +32,61 @@ struct context
     bool oddSteps;
     int dinoStatus;
     bool jump;
-    bool jumped;
+    bool jumping;
     bool gameover;
     int v_y;
     float v;
     int tick;
     int maxTick;
-    std::queue<SDL_Rect> groundDest;
+    std::deque<SDL_Rect> groundDest;
     std::deque<enemy> enemies;
-    context()
-    {
+    void resetContext() {
+        high_score = std::max(current_score, high_score);
         SDL_Rect groundDest1 = {0, SCREEN_HEIGHT / 3 * 2 - 9, 2400, 24};
         SDL_Rect groundDest2 = {2400, SCREEN_HEIGHT / 3 * 2 - 9, 2400, 24};
         dinoDest = {160, SCREEN_HEIGHT / 3 * 2 - 80, 88, 94};
+        isPlaying = false;
+        current_score = 0;
+        oddSteps = false;
+        dinoStatus = DINO_STATUS_RUNNING;
+        jump = false;
+        jumping = false;
+        gameover = false;
+        lastUpdate = SDL_GetTicks();
+        v = 10;
+        v_y = V_JUMP;
+        tick = 0;
+        maxTick = 50;
+        groundDest.clear();
+        enemies.clear();
+        groundDest.push_back(groundDest1);
+        groundDest.push_back(groundDest2);
+    }
+    context()
+    {
+        // SDL_Rect groundDest1 = {0, SCREEN_HEIGHT / 3 * 2 - 9, 2400, 24};
+        // SDL_Rect groundDest2 = {2400, SCREEN_HEIGHT / 3 * 2 - 9, 2400, 24};
+        // dinoDest = {160, SCREEN_HEIGHT / 3 * 2 - 80, 88, 94};
         quit = false;
         window = NULL;
         renderer = NULL;
         font = NULL;
         high_score = 0;
         current_score = 0;
-        isPlaying = false;
-        oddSteps = false;
-        dinoStatus = DINO_STATUS_RUNNING;
-        jump = false;
-        jumped = false;
-        gameover = false;
-        lastUpdate = SDL_GetTicks();
-        v = 10;
-        // v_y = -1000;
-        tick = 0;
-        maxTick = 50;
-        groundDest.push(groundDest1);
-        groundDest.push(groundDest2);
+        // isPlaying = false;
+        // oddSteps = false;
+        // dinoStatus = DINO_STATUS_RUNNING;
+        // jump = false;
+        // jumping = false;
+        // gameover = false;
+        // lastUpdate = SDL_GetTicks();
+        // v = 10;
+        // v_y = V_JUMP;
+        // tick = 0;
+        // maxTick = 50;
+        // groundDest.push(groundDest1);
+        // groundDest.push(groundDest2);
+        resetContext();
     }
 };
 enum object
@@ -100,8 +124,10 @@ namespace UI
     bool init(context *ctx);
     bool initWindow(context *ctx);
     bool initTTF();
-    bool loadFont(TTF_Font *&font);
     bool initIMGLoader();
+    bool initMixer();
+    bool loadFont(TTF_Font *&font);
+    bool loadSoundEffect();
 
     /* Destroyer */
     void destroyWindow(context *ctx);
@@ -112,6 +138,9 @@ namespace UI
     void updateSurface(SDL_Surface *src, SDL_Surface *des, int x, int y, int w, int h);
     void updateRenderer();
     SDL_Color getTextColor();
+    int playPressSound();
+    int playHitSound();
+    int playReachedSound();
     SDL_Texture* loadObject(SDL_Renderer * renderer);
     void showObject(SDL_Renderer *renderer, int objectIndex);
     void showObject(SDL_Renderer *renderer, int objectIndex, SDL_Rect *dst_rect);

@@ -97,9 +97,6 @@ namespace GamePlay
     }
     void drawScore(context *ctx)
     {
-        if(ctx->current_score % 500 == 0) {
-            ctx->v += 1;
-        }
         UI::showText(ctx->renderer, ctx->font, "HI", UI::getTextColor(), &hiText);
         UI::showText(ctx->renderer, ctx->font, std::to_string(ctx->high_score).c_str(), UI::getTextColor(), &destHighScore);
         UI::showText(ctx->renderer, ctx->font, std::to_string(ctx->current_score).c_str(), UI::getTextColor(), &destCurrentScore);
@@ -123,10 +120,10 @@ namespace GamePlay
     {
         if (ctx->jump)
         {
-            if (ctx->jumped == true && ctx->dinoDest.y >= objectDestLocation[object::DINO_3].y)
+            if (ctx->jumping == true && ctx->dinoDest.y >= objectDestLocation[object::DINO_3].y)
             {
                 ctx->jump = false;
-                ctx->jumped = false;
+                ctx->jumping = false;
                 ctx->v_y = V_JUMP;
                 ctx->dinoDest = objectDestLocation[object::DINO_3];
                 ctx->dinoStatus = DINO_STATUS_RUNNING;
@@ -139,9 +136,10 @@ namespace GamePlay
                 if (ctx->dinoDest.y <= 200)
                 {
                     ctx->v_y = -V_JUMP;
+                    UI::playPressSound();
                 }
                 // UI::showObject(ctx->renderer, object::DINO_1, &ctx->dinoDest);
-                ctx->jumped = true;
+                ctx->jumping = true;
                 //         // ctx->jump = false;
                 ctx->dinoStatus = DINO_STATUS_JUMPING;
             }
@@ -161,6 +159,7 @@ namespace GamePlay
         {
             ctx->isPlaying = false;
             ctx->dinoStatus = DINO_STATUS_DIE;
+            UI::playHitSound();
         }
         switch (ctx->dinoStatus)
         {
@@ -233,8 +232,8 @@ namespace GamePlay
 
         if (ctx->groundDest.front().x <= -2400)
         {
-            ctx->groundDest.pop();
-            ctx->groundDest.push(groundDest2);
+            ctx->groundDest.pop_front();
+            ctx->groundDest.push_back(groundDest2);
         }
         else
         {
@@ -258,10 +257,13 @@ namespace GamePlay
         SDL_RenderPresent(ctx->renderer);
         if (framesToUpdate > 0)
         {
-            // object.lastFrame += framesToUpdate;
-            // object.lastFrame %= object.numFrames;
-            // ctx->current_score++;
-            ctx->current_score ++;
+            // std::cout << ctx->current_score << std::endl;
+            ctx->current_score++;
+            if (ctx->current_score % 100 == 0 && ctx->current_score > 0)
+            {
+                ctx->v += 1;
+                UI::playReachedSound();
+            }
             ctx->lastUpdate = current;
         }
     }
