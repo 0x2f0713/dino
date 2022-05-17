@@ -21,5 +21,5 @@ make
 ### Run game
 
 ```
-~/dino/build$ ./dino
+~/dino/build$ ./Dino
 ```
