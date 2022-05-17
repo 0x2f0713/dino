@@ -25,9 +25,10 @@ struct context
     SDL_Texture *object;
     uint64_t high_score;
     uint64_t current_score;
+    Uint32 lastUpdate;
     SDL_Rect dinoDest;
     bool isPlaying;
-    bool oddSteps;
+    int oddSteps;
     bool jump;
     bool jumped;
     int v_y;
@@ -39,7 +40,7 @@ struct context
     {
         SDL_Rect groundDest1 = {0, SCREEN_HEIGHT / 3 * 2 - 9, 2400, 24};
         SDL_Rect groundDest2 = {2400, SCREEN_HEIGHT / 3 * 2 - 9, 2400, 24};
-        SDL_Rect dinoDest = {160, SCREEN_HEIGHT / 3 * 2 - 80, 88, 94};
+        dinoDest = {160, SCREEN_HEIGHT / 3 * 2 - 80, 88, 94};
         quit = false;
         window = NULL;
         renderer = NULL;
@@ -47,12 +48,12 @@ struct context
         high_score = 0;
         current_score = 0;
         isPlaying = false;
-        oddSteps = false;
+        oddSteps = 0;
         jump = false;
         jumped = false;
-        v_y = 0;
+        // v_y = -1000;
         tick = 0;
-        maxTick = rand() % 100 + 500;
+        maxTick = RANDOM_ENEMY;
         groundDest.push(groundDest1);
         groundDest.push(groundDest2);
     }

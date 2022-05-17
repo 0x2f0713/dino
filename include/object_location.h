@@ -51,7 +51,7 @@ extern SDL_Rect objectDestLocation[28] = {
     {SCREEN_WIDTH, 2, 50, 100},  // TREE_BIG_4
     {SCREEN_WIDTH, 2, 102, 100}, // TREE_BIG_5
     {160, SCREEN_HEIGHT / 3 * 2 - 80, 88, 94},            // DINO_1
-    {1426, 2, 88, 94},           // DINO_2
+    {160, SCREEN_HEIGHT / 3 * 2 - 80, 88, 94},           // DINO_2
     {160, SCREEN_HEIGHT / 3 * 2 - 80, 88, 94},
     {160, SCREEN_HEIGHT / 3 * 2 - 80, 88, 94},
     // {1514, 2, 88, 94},      // DINO_3

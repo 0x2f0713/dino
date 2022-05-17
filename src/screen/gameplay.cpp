@@ -8,6 +8,7 @@
 
 namespace GamePlay
 {
+    float animatedFPS = 24.0f;
     SDL_Rect objectSrcLocation[28] = {
         {0, 0, 73, 65},     // REPLAY
         {76, 6, 90, 90},    // DINO_NORMAL
@@ -94,39 +95,46 @@ namespace GamePlay
     }
     void drawDinoRunning(context *ctx)
     {
-        // if (ctx->jump)
-        // {
-        //     if (ctx->jumped == true && ctx->dinoDest.y >= objectDestLocation[object::DINO_3].y)
-        //     {
-        //         ctx->jump = false;
-        //         ctx->jumped = false;
-        //         UI::showObject(ctx->renderer, ctx->oddSteps ? object::DINO_3 : object::DINO_4);
-        //     }
-        //     else
-        //     {
-        //         ctx->dinoDest.y += ctx->v_y;
-        //         ctx->v_y += ACCELERATION;
-        //         std::cout << ctx->dinoDest.y << std::endl;
-        //         UI::showObject(ctx->renderer, object::DINO_1, &ctx->dinoDest);
-        //         ctx->jumped = true;
+        if (ctx->jump)
+        {
+            if (ctx->jumped == true && ctx->dinoDest.y >= objectDestLocation[object::DINO_3].y)
+            {
+                ctx->jump = false;
+                ctx->jumped = false;
+                ctx->v_y = V_JUMP;
+                ctx->dinoDest = objectDestLocation[object::DINO_3];
+                UI::showObject(ctx->renderer, ctx->oddSteps ? object::DINO_3 : object::DINO_4);
+            }
+            else
+            {
+                
+                ctx->dinoDest.y += ctx->v_y;
+                // std::cout << ctx->dinoDest.y << " " << ctx->v_y << std::endl;
+                if(ctx->dinoDest.y <= 200) {
+                    ctx->v_y = -V_JUMP;
+                }
+                UI::showObject(ctx->renderer, object::DINO_1, &ctx->dinoDest);
+                ctx->jumped = true;
         //         // ctx->jump = false;
-        //     }
-        // }
-        // else
-        // {
-            UI::showObject(ctx->renderer, ctx->oddSteps ? object::DINO_3 : object::DINO_4);
-            ctx->oddSteps = !ctx->oddSteps;
-        // }
+            }
+        }
+        else
+        {
+            UI::showObject(ctx->renderer, ctx->oddSteps  % 4 == 0 ? object::DINO_3 : object::DINO_4);
+            ctx->oddSteps++;
+        }
     }
     void drawEnemy(context *ctx)
     {
+        std::cout << ctx->tick << " " << ctx->maxTick << std::endl;
         if (ctx->tick >= ctx->maxTick)
         {
             // add Enemy
             int object = rand() % 13;
             ctx->enemies.push_back(enemy(object + 4, objectDestLocation[object + 4]));
             ctx->tick = 0;
-            ctx->maxTick = rand() % 100 + (rand() % 6 + 5) * 100;
+            // ctx->maxTick = rand() % 100 + (rand() % 6 + 5) * 100;
+            ctx->maxTick = RANDOM_ENEMY;
         }
         else
         {
@@ -134,7 +142,7 @@ namespace GamePlay
             {
                 if (ctx->enemies[i].location.x + ctx->enemies[i].location.w > 0)
                 {
-                    ctx->enemies[i].location.x--;
+                    ctx->enemies[i].location.x -= 10;
                 }
                 else
                 {
@@ -155,14 +163,18 @@ namespace GamePlay
         }
         else
         {
-            ctx->groundDest.front().x--;
-            ctx->groundDest.back().x--;
+            ctx->groundDest.front().x-= 10;
+            ctx->groundDest.back().x-= 10;
         };
         UI::showObject(ctx->renderer, object::GROUND, &ctx->groundDest.front());
         UI::showObject(ctx->renderer, object::GROUND, &ctx->groundDest.back());
     }
+    bool checkCollision(SDL_Rect dinoDest, SDL_Rect enemy) {
+
+    }
     void redraw(context *ctx)
     {
+        Uint32 current = SDL_GetTicks();
         SDL_SetRenderDrawColor(ctx->renderer, 0xFF, 0xFF, 0xFF, 0xFF);
         SDL_RenderClear(ctx->renderer);
         drawScore(ctx);
