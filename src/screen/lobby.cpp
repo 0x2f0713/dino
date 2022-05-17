@@ -30,7 +30,7 @@ void initScreen(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *font)
   SDL_RenderDrawLine(renderer, 0,SCREEN_HEIGHT / 3 * 2-10,SCREEN_WIDTH, SCREEN_HEIGHT / 3 * 2);
   // Test write text
   SDL_Color color = {0, 0, 0};
-  SDL_Rect dest = {SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0, 0};
+  SDL_Rect dest = {SCREEN_WIDTH/2 - 200, SCREEN_HEIGHT/2, 0, 0};
   UI::showText(renderer, font, "Press Arrow Up button to Play", color, &dest);
 
   // SDL_RenderPresent(renderer);

@@ -42,15 +42,11 @@ int main()
         switch (ctx.e.key.keysym.sym)
         {
         case SDLK_LEFT:
-          // alien_x -= 1;
-          // printf("LEFT\n");
           break;
         case SDLK_RIGHT:
           ctx.isPlaying = true;
-          // printf("RIGHT\n");
           break;
         case SDLK_UP:
-          // printf("UP\n");
           if (ctx.isPlaying)
           {
             ctx.jump = true;
@@ -60,7 +56,6 @@ int main()
 
           break;
         case SDLK_DOWN:
-          // printf("DOWN\n");
           break;
         default:
           break;
@@ -68,7 +63,6 @@ int main()
         break;
 
       case SDL_KEYUP:
-        // printf("Key release detected\n");
         break;
       default:
         break;

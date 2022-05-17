@@ -32,10 +32,10 @@ extern SDL_Rect objectSrcLocation[28] = {
     {2, 104, 2400, 24}   // GROUND
 };
 extern SDL_Rect objectDestLocation[28] = {
-    {0, 0, 73, 65},             // REPLAY
+    {CENTER_HORIZONTAL(73), CENTER_VERTICAL(65), 73, 65},             // REPLAY
     {76, 6, 90, 90},            // DINO_NORMAL
     {166, 2, 92, 27},           // CLOUD
-    {954, 29, 381, 21},         // GAMEOVER
+    {CENTER_HORIZONTAL(381), CENTER_VERTICAL(21) - 100, 381, 21},         // GAMEOVER
     {SCREEN_WIDTH, 15, 92, 67}, // BIRD_1
     {SCREEN_WIDTH, 2, 92, 60},  // BIRD_2
     {SCREEN_WIDTH, 2, 34, 70},  // TREE_MEDIUM_1
