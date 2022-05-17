@@ -53,7 +53,7 @@ struct context
         jumped = false;
         // v_y = -1000;
         tick = 0;
-        maxTick = RANDOM_ENEMY;
+        maxTick = 50;
         groundDest.push(groundDest1);
         groundDest.push(groundDest2);
     }
