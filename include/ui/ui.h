@@ -28,10 +28,13 @@ struct context
     Uint32 lastUpdate;
     SDL_Rect dinoDest;
     bool isPlaying;
-    int oddSteps;
+    bool oddSteps;
+    int dinoStatus;
     bool jump;
     bool jumped;
+    bool gameover;
     int v_y;
+    float v;
     int tick;
     int maxTick;
     std::queue<SDL_Rect> groundDest;
@@ -48,9 +51,13 @@ struct context
         high_score = 0;
         current_score = 0;
         isPlaying = false;
-        oddSteps = 0;
+        oddSteps = false;
+        dinoStatus = DINO_STATUS_RUNNING;
         jump = false;
         jumped = false;
+        gameover = false;
+        lastUpdate = SDL_GetTicks();
+        v = 10;
         // v_y = -1000;
         tick = 0;
         maxTick = 50;
@@ -63,9 +70,9 @@ enum object
     REPLAY,
     DINO_NORMAL,
     CLOUD,
+    GAMEOVER,
     BIRD_1,
     BIRD_2,
-    GAMEOVER,
     TREE_MEDIUM_1,
     TREE_MEDIUM_2,
     TREE_MEDIUM_3,
