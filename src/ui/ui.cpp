@@ -1,8 +1,10 @@
 
 #include <iostream>
+#include <cstdio>
 
 #include "SDL2/SDL_image.h"
 #include "SDL2/SDL_ttf.h"
+#include "SDL2/SDL_mixer.h"
 #include "include/constant.h"
 #include "include/object_location.h"
 
@@ -11,14 +13,19 @@
 namespace UI
 {
     SDL_Texture *objectSrc;
+    Mix_Music *soundHit, *soundPress, *soundReached;
     bool init(context *ctx)
     {
-        return initWindow(ctx) && initTTF() && initIMGLoader() && loadFont(ctx->font);
+        bool res;
+        // printf("Initializing...\n");
+        res =  initWindow(ctx) && initTTF() && initIMGLoader() && initMixer() && loadSoundEffect() && loadFont(ctx->font);
+        // printf("%i\n",res);
+        return res;
     }
     bool initWindow(context *ctx)
     {
         // Initialize SDL
-        if (SDL_Init(SDL_INIT_VIDEO) < 0)
+        if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
         {
             // TODO: Implement log here
             return false;
@@ -68,6 +75,22 @@ namespace UI
         }
         return true;
     }
+    bool initMixer()
+    {
+        int flags = MIX_INIT_OGG;
+        if (flags != Mix_Init(flags))
+        {
+            printf("Could not initialize mixer.\n");
+            printf("Mix_Init: %s\n", Mix_GetError());
+            return false;
+        }
+
+        if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 512) == -1)
+        {
+            return false;
+        }
+        return true;
+    }
 
     void destroyWindow(context *ctx)
     {
@@ -103,6 +126,17 @@ namespace UI
         }
 
         return tmpTexture;
+    }
+    bool loadSoundEffect()
+    {
+        soundHit = Mix_LoadMUS("resources/sounds/sound-hit.ogx");
+        soundPress = Mix_LoadMUS("resources/sounds/sound-press.ogx");
+        soundReached = Mix_LoadMUS("resources/sounds/sound-reached.ogx");
+        if ((soundHit == NULL) || (soundPress == NULL) || (soundReached == NULL))
+        {
+            return false;
+        }
+        return true;
     }
 
     bool showText(SDL_Renderer *renderer, TTF_Font *font, char const *text, SDL_Color color, SDL_Rect *dst_rect)
@@ -149,8 +183,17 @@ namespace UI
 
     SDL_Color getTextColor()
     {
-        SDL_Color color = {83,83,83};
+        SDL_Color color = {83, 83, 83};
         return color;
+    }
+    int playPressSound() {
+        return Mix_PlayMusic(soundPress, 1);
+    }
+    int playHitSound() {
+        return Mix_PlayMusic(soundHit, 1);
+    }
+    int playReachedSound() {
+        return Mix_PlayMusic(soundReached, 1);
     }
     SDL_Texture *loadObject(SDL_Renderer *renderer)
     {
