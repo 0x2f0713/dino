@@ -1,3 +1,4 @@
+cmake_minimum_required(VERSION 3.14)
 ########################################################################
 # Prevent in-tree builds
 ########################################################################
@@ -5,7 +6,6 @@ if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
     message(FATAL_ERROR "Prevented in-tree build. This is bad practice.")
 endif(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
 
-cmake_minimum_required(VERSION 3.10)
 project(Dino)
 
 # set(CMAKE_VERBOSE_MAKEFILE ON)
