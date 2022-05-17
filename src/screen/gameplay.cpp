@@ -9,6 +9,7 @@
 namespace GamePlay
 {
     float animatedFPS = 24.0f;
+    const SDL_Rect groundDest2 = {2400, SCREEN_HEIGHT / 3 * 2 - 9, 2400, 24};
     SDL_Rect objectSrcLocation[28] = {
         {0, 0, 73, 65},     // REPLAY
         {76, 6, 90, 90},    // DINO_NORMAL
@@ -107,26 +108,27 @@ namespace GamePlay
             }
             else
             {
-                
+
                 ctx->dinoDest.y += ctx->v_y;
                 // std::cout << ctx->dinoDest.y << " " << ctx->v_y << std::endl;
-                if(ctx->dinoDest.y <= 200) {
+                if (ctx->dinoDest.y <= 200)
+                {
                     ctx->v_y = -V_JUMP;
                 }
                 UI::showObject(ctx->renderer, object::DINO_1, &ctx->dinoDest);
                 ctx->jumped = true;
-        //         // ctx->jump = false;
+                //         // ctx->jump = false;
             }
         }
         else
         {
-            UI::showObject(ctx->renderer, ctx->oddSteps  % 4 == 0 ? object::DINO_3 : object::DINO_4);
+            UI::showObject(ctx->renderer, ctx->oddSteps % 4 == 0 ? object::DINO_3 : object::DINO_4);
             ctx->oddSteps++;
         }
     }
     void drawEnemy(context *ctx)
     {
-        std::cout << ctx->tick << " " << ctx->maxTick << std::endl;
+        // std::cout << ctx->tick << " " << ctx->maxTick << std::endl;
         if (ctx->tick >= ctx->maxTick)
         {
             // add Enemy
@@ -155,7 +157,7 @@ namespace GamePlay
     }
     void drawGround(context *ctx)
     {
-        SDL_Rect groundDest2 = {2400, SCREEN_HEIGHT / 3 * 2 - 9, 2400, 24};
+
         if (ctx->groundDest.front().x <= -2400)
         {
             ctx->groundDest.pop();
@@ -163,14 +165,34 @@ namespace GamePlay
         }
         else
         {
-            ctx->groundDest.front().x-= 10;
-            ctx->groundDest.back().x-= 10;
+            ctx->groundDest.front().x -= 10;
+            ctx->groundDest.back().x -= 10;
         };
         UI::showObject(ctx->renderer, object::GROUND, &ctx->groundDest.front());
         UI::showObject(ctx->renderer, object::GROUND, &ctx->groundDest.back());
     }
-    bool checkCollision(SDL_Rect dinoDest, SDL_Rect enemy) {
+    /* 
+        Check collision algo: https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
+     */
+    bool checkCollision(SDL_Rect dinoDest, SDL_Rect enemy)
+    {
+        bool collide = false;
 
+        if (dinoDest.x < enemy.x + enemy.w &&
+            dinoDest.x + dinoDest.w > enemy.x &&
+            dinoDest.y < enemy.y + enemy.h &&
+            dinoDest.h + dinoDest.y > enemy.y)
+        {
+            // collision detected!
+            collide = true;
+        }
+        else
+        {
+            // no collision
+            collide = false;
+        }
+
+        return collide;
     }
     void redraw(context *ctx)
     {
@@ -181,6 +203,11 @@ namespace GamePlay
         drawGround(ctx);
         drawEnemy(ctx);
         drawDinoRunning(ctx);
+        for (int i = 0; i < ctx->enemies.size(); i++)
+        {
+            std::cout << checkCollision(ctx->dinoDest, ctx->enemies[i].location) << " ";
+        }
+        std::cout << std::endl;
         SDL_RenderPresent(ctx->renderer);
     }
 } // namespace GamePlay
