@@ -20,8 +20,10 @@ int main()
     ctx.quit = true;
     // Implement logging here
   }
+  ctx.lastUpdate = SDL_GetTicks();
   while (!ctx.quit)
   {
+    Uint64 start = SDL_GetPerformanceCounter();
     if (ctx.isPlaying)
     {
       // TODO: Redraw game screen
@@ -41,14 +43,14 @@ int main()
         {
         case SDLK_LEFT:
           // alien_x -= 1;
-          printf("LEFT\n");
+          // printf("LEFT\n");
           break;
         case SDLK_RIGHT:
           ctx.isPlaying = true;
-          printf("RIGHT\n");
+          // printf("RIGHT\n");
           break;
         case SDLK_UP:
-          printf("UP\n");
+          // printf("UP\n");
           if (ctx.isPlaying)
           {
             ctx.jump = true;
@@ -58,7 +60,7 @@ int main()
 
           break;
         case SDLK_DOWN:
-          printf("DOWN\n");
+          // printf("DOWN\n");
           break;
         default:
           break;
@@ -66,12 +68,19 @@ int main()
         break;
 
       case SDL_KEYUP:
-        printf("Key release detected\n");
+        // printf("Key release detected\n");
         break;
       default:
         break;
       }
     }
+
+	Uint64 end = SDL_GetPerformanceCounter();
+
+	float elapsedMS = (end - start) / (float)SDL_GetPerformanceFrequency() * 1000.0f;
+
+	// Cap to 60 FPS
+	SDL_Delay(floor(16.666f - elapsedMS));
   }
 
   UI::destroyWindow(&ctx);
