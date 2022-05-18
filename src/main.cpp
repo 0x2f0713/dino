@@ -67,6 +67,14 @@ int main()
 
       case SDL_KEYUP:
         break;
+      case SDL_MOUSEBUTTONDOWN:
+        // printf("SDL_MOUSEBUTTONDOWN\n");
+        if (ctx.gameover)
+        {
+          ctx.resetContext();
+          ctx.isPlaying = true;
+          ctx.lastUpdate = SDL_GetTicks();
+        }
       default:
         break;
       }
