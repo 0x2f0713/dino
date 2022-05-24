@@ -9,8 +9,8 @@
 #define CENTER_VERTICAL(x) SCREEN_HEIGHT / 2 - x / 2
 
 
-#define V_JUMP -7
-#define ACCELERATION 1
+#define V_JUMP -12
+#define ACCELERATION 2
 #define RANDOM_ENEMY_INTERVAL rand() % 10 + (1) * 100;
 
 #define TRASH_PIXEL 20
