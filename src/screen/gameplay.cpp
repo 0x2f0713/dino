@@ -135,7 +135,8 @@ namespace GamePlay
                 // std::cout << ctx->dinoDest.y << " " << ctx->v_y << std::endl;
                 if (ctx->dinoDest.y <= 200)
                 {
-                    ctx->v_y = -V_JUMP;
+                    // ctx->v_y = -V_JUMP;
+                    ctx->v_y = 2; // Reset v_y
                     UI::playPressSound();
                 }
                 // UI::showObject(ctx->renderer, object::DINO_1, &ctx->dinoDest);
@@ -258,6 +259,9 @@ namespace GamePlay
         if (framesToUpdate > 0)
         {
             // std::cout << ctx->current_score << std::endl;
+            if(ctx->jumping) {
+                ctx->v_y += ACCELERATION;
+            }
             ctx->current_score++;
             if (ctx->current_score % 100 == 0 && ctx->current_score > 0)
             {
