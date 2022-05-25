@@ -51,12 +51,14 @@ int main()
           {
             ctx.jump = true;
           }
+          else  {
+            ctx.lastUpdate = SDL_GetTicks();
+          }
           if (ctx.gameover)
           {
             ctx.resetContext();
           }
           ctx.isPlaying = true;
-          ctx.lastUpdate = SDL_GetTicks();
           break;
         case SDLK_DOWN:
           break;

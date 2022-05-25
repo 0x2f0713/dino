@@ -40,8 +40,8 @@ SDL_Rect objectSrcLocation[28] = {
 };
 SDL_Rect objectDestLocation[28] = {
     {CENTER_HORIZONTAL(73), CENTER_VERTICAL(65), 73, 65},         // REPLAY
-    {160, SCREEN_HEIGHT / 3 * 2 - 80, 90, 90},                                              // DINO_NORMAL
-    {SCREEN_WIDTH, SCREEN_HEIGHT / 3, 92, 27},                                             // CLOUD
+    {160, SCREEN_HEIGHT / 3 * 2 - 80, 90, 90},                    // DINO_NORMAL
+    {SCREEN_WIDTH, SCREEN_HEIGHT / 3, 92, 27},                    // CLOUD
     {CENTER_HORIZONTAL(381), CENTER_VERTICAL(21) - 100, 381, 21}, // GAMEOVER
     {SCREEN_WIDTH, SCREEN_HEIGHT / 3 * 2 - 170, 92, 67},          // BIRD_1
     {SCREEN_WIDTH, SCREEN_HEIGHT / 3 * 2 - 170, 92, 60},          // BIRD_2
@@ -76,7 +76,7 @@ namespace UI
     bool init(context *ctx)
     {
         bool res;
-        res =  initWindow(ctx) && initTTF() && initIMGLoader() && initMixer() && loadSoundEffect() && loadFont(ctx->font16, 16) && loadFont(ctx->font24, 24);
+        res = initWindow(ctx) && initTTF() && initIMGLoader() && initMixer() && loadSoundEffect() && loadFont(ctx->font16, 16) && loadFont(ctx->font24, 24);
         return res;
     }
     bool initWindow(context *ctx)
@@ -151,9 +151,24 @@ namespace UI
 
     void destroyWindow(context *ctx)
     {
+        Mix_FreeMusic( soundHit );
+        Mix_FreeMusic( soundReached );
+        Mix_FreeMusic( soundPress );
+
+        TTF_CloseFont( ctx->font16 );
+        TTF_CloseFont( ctx->font24 );
+        ctx->font16 =  NULL;
+        ctx->font24 =  NULL;
+
+        SDL_DestroyRenderer(ctx->renderer);
         SDL_DestroyWindow(ctx->window);
+        ctx->renderer =  NULL;
+        ctx->window =  NULL;
 
         // Quit SDL subsystems
+        Mix_CloseAudio();
+        TTF_Quit(); 
+        IMG_Quit();
         SDL_Quit();
     }
 
@@ -243,13 +258,16 @@ namespace UI
         SDL_Color color = {83, 83, 83};
         return color;
     }
-    int playPressSound() {
+    int playPressSound()
+    {
         return Mix_PlayMusic(soundPress, 1);
     }
-    int playHitSound() {
+    int playHitSound()
+    {
         return Mix_PlayMusic(soundHit, 1);
     }
-    int playReachedSound() {
+    int playReachedSound()
+    {
         return Mix_PlayMusic(soundReached, 1);
     }
     SDL_Texture *loadObject(SDL_Renderer *renderer)
