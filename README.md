@@ -59,6 +59,7 @@ Demo Video: comming soon...
 - Sử dụng namespace để xây dựng thư viện xử lý đồ họa, âm thanh, tích hợp thư viện vào gameplay để code được hệ thống hóa
 - Sử dụng con trỏ để thao tác với vùng nhớ và SDL2
 - Sử dụng các cấu trúc dữ liệu như mảng, deque để lưu vị trí của những đối tượng trong game
+- Sử dụng include guards trong các file header để tránh bị redefinition
 
 ## Kết luận
 
