@@ -22,7 +22,8 @@ struct context
     SDL_Window *window;
     SDL_Renderer *renderer;
     SDL_Event e;
-    TTF_Font *font;
+    TTF_Font *font16;
+    TTF_Font *font24;
     SDL_Texture *object;
     uint64_t high_score;
     uint64_t current_score;
@@ -36,10 +37,13 @@ struct context
     bool gameover;
     int v_y;
     float v;
-    int tick;
-    int maxTick;
+    int enemyTick;
+    int cloudTick;
+    int maxEnemyTick;
+    int maxCloudTick;
     std::deque<SDL_Rect> groundDest;
     std::deque<enemy> enemies;
+    std::deque<SDL_Rect> clouds;
     void resetContext() {
         high_score = std::max(current_score, high_score);
         SDL_Rect groundDest1 = {0, SCREEN_HEIGHT / 3 * 2 - 9, 2400, 24};
@@ -55,8 +59,10 @@ struct context
         lastUpdate = SDL_GetTicks();
         v = 10;
         v_y = V_JUMP;
-        tick = 0;
-        maxTick = 50;
+        enemyTick = 0;
+        cloudTick = 0;
+        maxEnemyTick = 50;
+        maxCloudTick = 30;
         groundDest.clear();
         enemies.clear();
         groundDest.push_back(groundDest1);
@@ -64,28 +70,13 @@ struct context
     }
     context()
     {
-        // SDL_Rect groundDest1 = {0, SCREEN_HEIGHT / 3 * 2 - 9, 2400, 24};
-        // SDL_Rect groundDest2 = {2400, SCREEN_HEIGHT / 3 * 2 - 9, 2400, 24};
-        // dinoDest = {160, SCREEN_HEIGHT / 3 * 2 - 80, 88, 94};
         quit = false;
         window = NULL;
         renderer = NULL;
-        font = NULL;
+        font16 = NULL;
+        font24 = NULL;
         high_score = 0;
         current_score = 0;
-        // isPlaying = false;
-        // oddSteps = false;
-        // dinoStatus = DINO_STATUS_RUNNING;
-        // jump = false;
-        // jumping = false;
-        // gameover = false;
-        // lastUpdate = SDL_GetTicks();
-        // v = 10;
-        // v_y = V_JUMP;
-        // tick = 0;
-        // maxTick = 50;
-        // groundDest.push(groundDest1);
-        // groundDest.push(groundDest2);
         resetContext();
     }
 };
@@ -126,7 +117,7 @@ namespace UI
     bool initTTF();
     bool initIMGLoader();
     bool initMixer();
-    bool loadFont(TTF_Font *&font);
+    bool loadFont(TTF_Font *&font, int size);
     bool loadSoundEffect();
 
     /* Destroyer */

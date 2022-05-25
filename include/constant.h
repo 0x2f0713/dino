@@ -12,6 +12,7 @@
 #define V_JUMP -12
 #define ACCELERATION 2
 #define RANDOM_ENEMY_INTERVAL rand() % 10 + (1) * 100;
+#define RANDOM_CLOUD_INTERVAL (rand() % 50) * (rand() % 2) + rand() % 25 + 10;
 
 #define TRASH_PIXEL 20
 
