@@ -11,9 +11,9 @@ int main()
   bool initState = UI::init(&ctx);
   if (initState)
   {
-    initScreen(ctx.window, ctx.renderer, ctx.font);
-    SDL_RenderPresent(ctx.renderer);
     ctx.object = UI::loadObject(ctx.renderer);
+    initScreen(ctx.window, ctx.renderer, ctx.font16);
+    SDL_RenderPresent(ctx.renderer);
   }
   else
   {
