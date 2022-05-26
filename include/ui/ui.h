@@ -34,6 +34,7 @@ struct context
     int dinoStatus;
     bool jump;
     bool jumping;
+    bool cowering;
     bool gameover;
     int v_y;
     float v;
@@ -55,6 +56,7 @@ struct context
         dinoStatus = DINO_STATUS_RUNNING;
         jump = false;
         jumping = false;
+        cowering = false;
         gameover = false;
         lastUpdate = SDL_GetTicks();
         v = 10;

@@ -16,9 +16,10 @@
 
 #define TRASH_PIXEL 20
 
-#define DINO_STATUS_RUNNING 0
-#define DINO_STATUS_JUMPING 1
-#define DINO_STATUS_DIE     2
+#define DINO_STATUS_RUNNING     0
+#define DINO_STATUS_JUMPING     1
+#define DINO_STATUS_DIE         2
+#define DINO_STATUS_COWERING    3
 
 
 #endif

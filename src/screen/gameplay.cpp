@@ -148,6 +148,11 @@ namespace GamePlay
         }
         else
         {
+            if (ctx->cowering)
+            {
+                ctx->dinoStatus = DINO_STATUS_COWERING;
+            }
+            else ctx->dinoStatus = DINO_STATUS_RUNNING;
             if (framesToUpdate > 0)
             {
                 ctx->oddSteps = !ctx->oddSteps;
@@ -176,6 +181,8 @@ namespace GamePlay
         case DINO_STATUS_JUMPING:
             UI::showObject(ctx->renderer, object::DINO_1, &ctx->dinoDest);
             break;
+        case DINO_STATUS_COWERING:
+            UI::showObject(ctx->renderer, ctx->oddSteps ? object::DINO_6 : object::DINO_7);
         }
     }
     void drawEnemy(context *ctx, float dT)

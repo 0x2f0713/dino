@@ -61,6 +61,7 @@ int main()
           ctx.isPlaying = true;
           break;
         case SDLK_DOWN:
+          ctx.cowering = true;
           break;
         default:
           break;
@@ -68,6 +69,7 @@ int main()
         break;
 
       case SDL_KEYUP:
+        if(ctx.cowering) ctx.cowering = false;
         break;
       case SDL_MOUSEBUTTONDOWN:
         // printf("SDL_MOUSEBUTTONDOWN\n");
