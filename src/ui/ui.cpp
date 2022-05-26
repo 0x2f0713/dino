@@ -43,8 +43,8 @@ SDL_Rect objectDestLocation[28] = {
     {160, SCREEN_HEIGHT / 3 * 2 - 80, 90, 90},                    // DINO_NORMAL
     {SCREEN_WIDTH, SCREEN_HEIGHT / 3, 92, 27},                    // CLOUD
     {CENTER_HORIZONTAL(381), CENTER_VERTICAL(21) - 100, 381, 21}, // GAMEOVER
-    {SCREEN_WIDTH, SCREEN_HEIGHT / 3 * 2 - 170, 92, 67},          // BIRD_1
-    {SCREEN_WIDTH, SCREEN_HEIGHT / 3 * 2 - 170, 92, 60},          // BIRD_2
+    {SCREEN_WIDTH, SCREEN_HEIGHT / 3 * 2 - 140, 92, 67},          // BIRD_1
+    {SCREEN_WIDTH, SCREEN_HEIGHT / 3 * 2 - 140, 92, 60},          // BIRD_2
     {SCREEN_WIDTH, SCREEN_HEIGHT / 3 * 2 - 55, 34, 70},           // TREE_MEDIUM_1
     {SCREEN_WIDTH, SCREEN_HEIGHT / 3 * 2 - 55, 34, 70},           // TREE_MEDIUM_2
     {SCREEN_WIDTH, SCREEN_HEIGHT / 3 * 2 - 55, 34, 70},           // TREE_MEDIUM_3
@@ -64,8 +64,8 @@ SDL_Rect objectDestLocation[28] = {
     // {1514, 2, 88, 94},      // DINO_3
     // {1602, 2, 88, 94},      // DINO_4
     {1782, 2, 88, 94},                       // DINO_5
-    {1866, 36, 118, 60},                     // DINO_6
-    {1984, 36, 118, 60},                     // DINO_7
+    {160, SCREEN_HEIGHT / 3 * 2 - 46, 118, 60},                     // DINO_6
+    {160, SCREEN_HEIGHT / 3 * 2 - 46, 118, 60},                     // DINO_7
     {0, SCREEN_HEIGHT / 3 * 2 - 9, 2400, 24} // GROUND
 };
 
