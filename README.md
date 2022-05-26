@@ -14,13 +14,16 @@ Dự án game Dino tương tự như trò chơi ẩn của Google Chrome, dự �
 Dự án yêu cầu cài đặt Cmake phiên bản tối thiểu là 3.14. 
 
 Với Ubuntu 20.04, bạn có thể cài đặt Cmake 3.16 bằng `apt`
-```shell
+```console
 sudo apt-get install cmake -y
 ```
 Với Ubuntu 18.04 trở xuống, bạn cần cài Cmake từ [Kitware APT Repository](https://apt.kitware.com/) hoặc [build Cmake từ source](https://cmake.org/install/)
 
 #### Hướng dẫn build game (sau khi cài đặt Cmake)
-```shell
+
+**Known issues:** Với Ubuntu 18.04, gói `libsdl2-mixer-dev` đang ở phiên bản 2.0.2, đang có lỗi không hỗ trợ định dạng file audio OGG, vì vậy cần compile từ source theo hướng dẫn [tại đây](./docs/BUILD_SDL_MIXER.md)
+
+```console
 # Install required packages (without CMake)
 sudo apt-get install git build-essential libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev libsdl2-mixer-dev -y
 # Clone this repository
@@ -34,7 +37,7 @@ make
 
 #### Chạy game
 File excutable nằm trong thư mục `build` và có thể chạy trực tiếp bằng lệnh sau
-```shell
+```console
 ./Dino
 ```
 
@@ -70,7 +73,6 @@ Demo Video: comming soon...
 - Cải thiện hình ảnh của các đối tượng.
 - Triển khai chế độ multiplayer qua mạng internet (Sử dụng UDP để giao tiếp với server)
 - Thêm những level vào game để game thêm thú vị
-- Sử dụng ninja để tăng tốc độ build game khi game có nhiều target cần build
 
 **Điều tâm đắc rút ra sau khi hoàn thành chương trình:**
 - Bước đầu sử dụng được Cmake để generate Makefile, quản lý được dependenies, giúp cho quá trình build và debug game được dễ dàng hơn
