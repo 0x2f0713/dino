@@ -100,7 +100,7 @@ int main()
     // Uint32 delay  = 1000/FPS-end+start;
     if (end - start < 1000 / FPS)
     {
-      printf("%zu %zu %zu\n",end, start, 1000 / FPS - (end - start)); 
+      // printf("%zu %zu %zu\n",end, start, 1000 / FPS - (end - start)); 
       if(1000 / FPS - (end - start) < 17) {
         SDL_Delay(1000 / FPS - (end - start));
       }
