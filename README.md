@@ -55,7 +55,7 @@ Trò chơi được lấy cảm hứng từ trò chơi Dino của Google Chrome.
 - Có âm thanh khi đạt mỗi mốc 100 điểm, thực hiện nhảy và khi va chạm chướng ngại vật
 - Lưu điểm số cao nhất của những lần chơi
 
-Demo Video: comming soon...
+Demo Video: https://youtu.be/wXjBhXm_kAk
 
 ## Các kỹ thuật lập trình được sử dụng
 
