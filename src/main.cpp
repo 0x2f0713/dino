@@ -2,11 +2,14 @@
 #include <cstdio>
 #include <math.h>
 // #include "include/object_location.h"
-
+#include "include/constant.h"
 #include "include/screen/lobby.h"
 #include "include/screen/gameplay.h"
+#include "include/ui/ui.h"
 int main()
 {
+  Uint32 start, end, cnt = 0;
+  float elapsedMS;
   context ctx = context();
   bool initState = UI::init(&ctx);
   if (initState)
@@ -23,7 +26,9 @@ int main()
   ctx.lastUpdate = SDL_GetTicks();
   while (!ctx.quit)
   {
-    Uint64 start = SDL_GetPerformanceCounter();
+    // printf("%d\n", cnt);
+    // cnt++;
+    start = SDL_GetTicks();
     if (ctx.isPlaying)
     {
       // TODO: Redraw game screen
@@ -50,8 +55,10 @@ int main()
           if (ctx.isPlaying)
           {
             ctx.jump = true;
+            UI::playPressSound();
           }
-          else  {
+          else
+          {
             ctx.lastUpdate = SDL_GetTicks();
           }
           if (ctx.gameover)
@@ -69,7 +76,8 @@ int main()
         break;
 
       case SDL_KEYUP:
-        if(ctx.cowering) ctx.cowering = false;
+        if (ctx.cowering)
+          ctx.cowering = false;
         break;
       case SDL_MOUSEBUTTONDOWN:
         // printf("SDL_MOUSEBUTTONDOWN\n");
@@ -84,12 +92,19 @@ int main()
       }
     }
 
-    Uint64 end = SDL_GetPerformanceCounter();
+    end = SDL_GetTicks();
 
-    float elapsedMS = (end - start) / (float)SDL_GetPerformanceFrequency() * 1000.0f;
+    // elapsedMS = (end - start) / (float)SDL_GetPerformanceFrequency() * 1000.0f;
 
     // Cap to 60 FPS
-    SDL_Delay(floor(16.666f - elapsedMS));
+    // Uint32 delay  = 1000/FPS-end+start;
+    if (end - start < 1000 / FPS)
+    {
+      printf("%zu %zu %zu\n",end, start, 1000 / FPS - (end - start)); 
+      if(1000 / FPS - (end - start) < 17) {
+        SDL_Delay(1000 / FPS - (end - start));
+      }
+    }
   }
 
   UI::destroyWindow(&ctx);
