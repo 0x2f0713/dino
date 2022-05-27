@@ -43,7 +43,7 @@ SDL_Rect objectDestLocation[28] = {
     {160, SCREEN_HEIGHT / 3 * 2 - 80, 90, 90},                    // DINO_NORMAL
     {SCREEN_WIDTH, SCREEN_HEIGHT / 3, 92, 27},                    // CLOUD
     {CENTER_HORIZONTAL(381), CENTER_VERTICAL(21) - 100, 381, 21}, // GAMEOVER
-    {SCREEN_WIDTH, SCREEN_HEIGHT / 3 * 2 - 140, 92, 67},          // BIRD_1
+    {SCREEN_WIDTH, SCREEN_HEIGHT / 3 * 2 - 130, 92, 67},          // BIRD_1
     {SCREEN_WIDTH, SCREEN_HEIGHT / 3 * 2 - 140, 92, 60},          // BIRD_2
     {SCREEN_WIDTH, SCREEN_HEIGHT / 3 * 2 - 55, 34, 70},           // TREE_MEDIUM_1
     {SCREEN_WIDTH, SCREEN_HEIGHT / 3 * 2 - 55, 34, 70},           // TREE_MEDIUM_2
@@ -151,6 +151,8 @@ namespace UI
 
     void destroyWindow(context *ctx)
     {
+        SDL_DestroyTexture(objectSrc);
+        
         Mix_FreeMusic( soundHit );
         Mix_FreeMusic( soundReached );
         Mix_FreeMusic( soundPress );
