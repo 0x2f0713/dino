@@ -2,6 +2,7 @@
 #include "math.h"
 #include <queue>
 #include <iostream>
+#include <cstdio>
 
 #include "include/constant.h"
 #include "include/object_location.h"
@@ -131,14 +132,13 @@ namespace GamePlay
             }
             else
             {
-
                 ctx->dinoDest.y += ctx->v_y;
                 // std::cout << ctx->dinoDest.y << " " << ctx->v_y << std::endl;
                 if (ctx->dinoDest.y <= 200)
                 {
                     // ctx->v_y = -V_JUMP;
-                    ctx->v_y = 2; // Reset v_y
-                    UI::playPressSound();
+                    ctx->v_y = 0; // Reset v_y
+                    
                 }
                 // UI::showObject(ctx->renderer, object::DINO_1, &ctx->dinoDest);
                 ctx->jumping = true;
@@ -188,7 +188,6 @@ namespace GamePlay
     void drawEnemy(context *ctx, float dT)
     {
         int framesToUpdate = floor(dT / (1.0f / animatedBirdFPS));
-        // std::cout << framesToUpdate << std::endl;
         if (ctx->enemyTick >= ctx->maxEnemyTick)
         {
             // add Enemy
@@ -267,7 +266,6 @@ namespace GamePlay
         SDL_RenderPresent(ctx->renderer);
         if (framesToUpdate > 0)
         {
-            // std::cout << ctx->current_score << std::endl;
             if (ctx->jumping)
             {
                 ctx->v_y += ACCELERATION;
