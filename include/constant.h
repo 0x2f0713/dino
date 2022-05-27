@@ -4,14 +4,15 @@
 #define SCREEN_WIDTH 1366
 #define SCREEN_HEIGHT 768
 #define WINDOW_TITLE "Dino"
+#define FPS 59
 
 #define CENTER_HORIZONTAL(x) SCREEN_WIDTH  / 2 - x / 2
 #define CENTER_VERTICAL(x) SCREEN_HEIGHT / 2 - x / 2
 
 
 #define V_JUMP -12
-#define ACCELERATION 2
-#define RANDOM_ENEMY_INTERVAL rand() % 10 + (1) * 100;
+#define ACCELERATION 3
+#define RANDOM_ENEMY_INTERVAL rand() % 10 + rand() % 50 + 50;
 #define RANDOM_CLOUD_INTERVAL (rand() % 50) * (rand() % 2) + rand() % 25 + 10;
 
 #define TRASH_PIXEL 20
