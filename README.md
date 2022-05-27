@@ -6,7 +6,8 @@ Dự án game Dino tương tự như trò chơi ẩn của Google Chrome, dự �
 
 ### 1. Chạy trực tiếp từ binary
 
-
+Hiện tại chỉ hỗ trợ cho hệ điều hành Linux 64-bit.
+Tải file zip chứa binary từ phần Release, giải nén và chạy file Dino trong thư mục vừa giải nén
 
 ### 2. Build từ source code
 
